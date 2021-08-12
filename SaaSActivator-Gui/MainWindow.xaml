@@ -1,0 +1,49 @@
+﻿<Window x:Class="SaaSActivator_Gui.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SaaSActivator_Gui"
+        mc:Ignorable="d"
+        Title="SaaS Activator" Height="650" Width="1200">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0">AAD Tenant ID:</Label>
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Path=TenantId}"></TextBox>
+        <Label Grid.Row="1" Grid.Column="0" >Client ID:</Label>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Path=ClientId}"></TextBox>
+        <Label Grid.Row="2" Grid.Column="0">Client Secret:</Label>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Path=ClientSecret}"></TextBox>
+        <Button Grid.Row="3" Grid.Column="0" Command="{Binding Path=FetchSubscriptions}">Get Subscriptions</Button>
+        <DataGrid Grid.Row="4" Grid.Column="1" Name = "dataGrid" AlternatingRowBackground = "LightBlue"  
+                  AlternationCount = "2" AutoGenerateColumns = "False" ItemsSource="{Binding Path=Subscriptions}">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header = "ID" Binding = "{Binding Subscription.Id}" />
+                <DataGridTextColumn Header = "Name" Binding = "{Binding Subscription.Name}" />
+                <DataGridTextColumn Header = "Purchaser" Binding = "{Binding Subscription.Purchaser.EmailId}" />
+                <DataGridTextColumn Header = "Offer ID" Binding = "{Binding Subscription.OfferId}" />
+                <DataGridTextColumn Header = "Plan ID" Binding = "{Binding Subscription.PlanId}" />
+                <DataGridTextColumn Header = "Status" Binding = "{Binding Subscription.SaasSubscriptionStatus}" />
+                <DataGridTemplateColumn Header = "Activate">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Command="{Binding Path=Activate}">Activate</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn> 
+            </DataGrid.Columns>
+
+        </DataGrid>
+    </Grid>
+</Window>
